@@ -1,11 +1,328 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="description" content="Tienda Evelyn – Tu tienda de confianza en La Cabaña, El Paisnal. Encuentra todo lo que necesitas cerca de ti.">
+    <title>Tienda Evelyn</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --green:  #2e7d32;
+            --green-light: #43a047;
+            --yellow: #f9a825;
+            --white:  #ffffff;
+            --gray:   #f5f5f5;
+            --dark:   #1a1a1a;
+            --text:   #333333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: var(--text);
+            background: var(--white);
+            scroll-behavior: smooth;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--green);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 2rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,.3);
+        }
+        nav .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--yellow);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+        nav ul a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color .2s;
+        }
+        nav ul a:hover { color: var(--yellow); }
+
+        /* ── HERO ── */
+        .hero {
+            background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 60%, var(--yellow) 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 6rem 1.5rem 5rem;
+        }
+        .hero .badge {
+            display: inline-block;
+            background: var(--yellow);
+            color: var(--dark);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 0.3rem 1rem;
+            border-radius: 999px;
+            margin-bottom: 1.2rem;
+        }
+        .hero h1 {
+            font-size: clamp(2.2rem, 6vw, 4rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 8px rgba(0,0,0,.25);
+        }
+        .hero p {
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            max-width: 560px;
+            margin: 0 auto 2rem;
+            opacity: .92;
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.85rem 2.2rem;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: transform .15s, box-shadow .15s;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.25); }
+        .btn-yellow { background: var(--yellow); color: var(--dark); }
+        .btn-outline { background: transparent; color: var(--white); border: 2px solid var(--white); margin-left: .75rem; }
+
+        /* ── SECTIONS ── */
+        section { padding: 4rem 1.5rem; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        .section-title {
+            text-align: center;
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-weight: 700;
+            color: var(--green);
+            margin-bottom: 0.6rem;
+        }
+        .section-sub {
+            text-align: center;
+            color: #666;
+            margin-bottom: 2.5rem;
+            font-size: 1rem;
+        }
+
+        /* ── CATEGORIES ── */
+        #categorias { background: var(--gray); }
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1.25rem;
+        }
+        .card {
+            background: var(--white);
+            border-radius: 14px;
+            padding: 1.8rem 1rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,.08);
+            transition: transform .2s, box-shadow .2s;
+        }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 8px 22px rgba(0,0,0,.13); }
+        .card .icon { font-size: 2.6rem; margin-bottom: 0.7rem; }
+        .card h3 { font-size: 0.95rem; font-weight: 600; color: var(--dark); }
+
+        /* ── WHY US ── */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+        .feature {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0.6rem;
+        }
+        .feature .icon {
+            width: 60px; height: 60px;
+            background: var(--green);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.7rem;
+            color: var(--white);
+            flex-shrink: 0;
+        }
+        .feature h3 { font-weight: 700; font-size: 1rem; color: var(--dark); }
+        .feature p { font-size: 0.9rem; color: #666; }
+
+        /* ── LOCATION ── */
+        #ubicacion { background: var(--gray); }
+        .location-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: center;
+            justify-content: center;
+        }
+        .location-info { flex: 1 1 260px; max-width: 420px; }
+        .location-info h3 { font-size: 1.3rem; color: var(--green); margin-bottom: 0.75rem; }
+        .location-info p { margin-bottom: 0.5rem; line-height: 1.7; }
+        .location-info .pin { font-size: 1.1rem; }
+        .map-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 1rem;
+            padding: 0.7rem 1.4rem;
+            background: var(--green);
+            color: var(--white);
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: background .2s;
+        }
+        .map-link:hover { background: var(--green-light); }
+        .map-embed {
+            flex: 1 1 320px;
+            max-width: 500px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 18px rgba(0,0,0,.15);
+            line-height: 0;
+        }
+        .map-embed iframe {
+            width: 100%;
+            height: 280px;
+            border: none;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--dark);
+            color: #bbb;
+            text-align: center;
+            padding: 2rem 1.5rem;
+            font-size: 0.88rem;
+        }
+        footer strong { color: var(--yellow); }
+        footer p + p { margin-top: 0.4rem; }
+    </style>
 </head>
 <body>
-    <h1>Hola Chele</h1>
+
+    <!-- NAV -->
+    <nav>
+        <a href="#" class="logo">🛒 Tienda Evelyn</a>
+        <ul>
+            <li><a href="#categorias">Productos</a></li>
+            <li><a href="#nosotros">Nosotros</a></li>
+            <li><a href="#ubicacion">Ubicación</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero">
+        <span class="badge">La Cabaña, El Paisnal</span>
+        <h1>Tienda Evelyn</h1>
+        <p>Tu tienda de confianza con todo lo que necesitas, cerca de tu hogar.</p>
+        <a href="#categorias" class="btn btn-yellow">Ver productos</a>
+        <a href="#ubicacion" class="btn btn-outline">¿Cómo llegar?</a>
+    </header>
+
+    <!-- CATEGORIES -->
+    <section id="categorias">
+        <div class="container">
+            <h2 class="section-title">Lo que encontrarás aquí</h2>
+            <p class="section-sub">Productos variados para el hogar y el día a día</p>
+            <div class="card-grid">
+                <div class="card"><div class="icon">🥫</div><h3>Abarrotes</h3></div>
+                <div class="card"><div class="icon">🥤</div><h3>Bebidas</h3></div>
+                <div class="card"><div class="icon">🍞</div><h3>Panadería</h3></div>
+                <div class="card"><div class="icon">🧴</div><h3>Higiene personal</h3></div>
+                <div class="card"><div class="icon">🧹</div><h3>Limpieza</h3></div>
+                <div class="card"><div class="icon">🍬</div><h3>Dulces y snacks</h3></div>
+                <div class="card"><div class="icon">🌽</div><h3>Granos básicos</h3></div>
+                <div class="card"><div class="icon">🛍️</div><h3>Y mucho más</h3></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY US -->
+    <section id="nosotros">
+        <div class="container">
+            <h2 class="section-title">¿Por qué elegirnos?</h2>
+            <p class="section-sub">Comprometidos con la comunidad de El Paisnal</p>
+            <div class="features">
+                <div class="feature">
+                    <div class="icon">😊</div>
+                    <h3>Atención amable</h3>
+                    <p>Te atendemos con calidez y servicio personalizado.</p>
+                </div>
+                <div class="feature">
+                    <div class="icon">💰</div>
+                    <h3>Precios accesibles</h3>
+                    <p>Productos de calidad al mejor precio para tu familia.</p>
+                </div>
+                <div class="feature">
+                    <div class="icon">📦</div>
+                    <h3>Variedad garantizada</h3>
+                    <p>Amplio surtido para cubrir todas tus necesidades.</p>
+                </div>
+                <div class="feature">
+                    <div class="icon">📍</div>
+                    <h3>Ubicación conveniente</h3>
+                    <p>Estamos en La Cabaña, El Paisnal, fácil de encontrar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOCATION -->
+    <section id="ubicacion">
+        <div class="container">
+            <h2 class="section-title">¿Dónde estamos?</h2>
+            <p class="section-sub">Ven a visitarnos, ¡te esperamos!</p>
+            <div class="location-wrap">
+                <div class="location-info">
+                    <h3>Tienda Evelyn</h3>
+                    <p class="pin">📍 La Cabaña, El Paisnal,<br>San Salvador, El Salvador</p>
+                    <p>Abrimos todos los días para atenderte y ofrecerte los mejores productos al mejor precio.</p>
+                    <a href="https://maps.app.goo.gl/HLEF1AvR7WM4EAkLA" target="_blank" rel="noopener noreferrer" class="map-link">
+                        🗺️ Cómo llegar (Google Maps)
+                    </a>
+                </div>
+                <div class="map-embed">
+                    <iframe
+                        src="https://www.google.com/maps?q=La+Cabaña,+El+Paisnal,+El+Salvador&output=embed"
+                        allowfullscreen
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Ubicación Tienda Evelyn">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p><strong>Tienda Evelyn</strong> &mdash; La Cabaña, El Paisnal, El Salvador</p>
+        <p>&copy; <span id="yr"></span> Tienda Evelyn. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        document.getElementById('yr').textContent = new Date().getFullYear();
+    </script>
+
 </body>
 </html>
