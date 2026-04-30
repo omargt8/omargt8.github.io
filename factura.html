@@ -249,6 +249,48 @@
             flex-wrap: wrap;
         }
 
+        /* ── PAYMENT SECTION ── */
+        .payment-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            align-items: flex-end;
+            margin-bottom: 1rem;
+        }
+        .field-pay { flex: 0 0 160px; }
+        .change-box {
+            margin-top: 1rem;
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .change-box.success {
+            background: #e8f5e9;
+            color: var(--green);
+            border: 1.5px solid #a5d6a7;
+        }
+        .change-box.exact {
+            background: #fff8e1;
+            color: #f57f17;
+            border: 1.5px solid #ffe082;
+        }
+        .change-box.insufficient {
+            background: #ffebee;
+            color: var(--danger);
+            border: 1.5px solid #ef9a9a;
+        }
+        #pay-error {
+            display: none;
+            color: var(--danger);
+            font-size: 0.88rem;
+            margin-top: 0.4rem;
+            font-weight: 600;
+        }
+
         /* ── FOOTER ── */
         footer {
             background: var(--dark);
@@ -355,6 +397,20 @@
         </div>
     </div>
 
+    <!-- PAYMENT -->
+    <div class="card" id="payment-card" style="display:none;">
+        <div class="card-title">💵 Registrar pago</div>
+        <div class="payment-row">
+            <div class="field field-pay">
+                <label for="inp-pay">Monto recibido ($)</label>
+                <input id="inp-pay" type="number" min="0" step="0.01" placeholder="0.00">
+            </div>
+            <button class="btn btn-green" id="btn-pay">Calcular cambio</button>
+        </div>
+        <p id="pay-error"></p>
+        <div id="change-box" class="change-box" style="display:none;"></div>
+    </div>
+
 </div>
 
 <!-- FOOTER -->
@@ -401,6 +457,10 @@
     const totTotal = document.getElementById('tot-total');
     const btnPrint = document.getElementById('btn-print');
     const btnClear = document.getElementById('btn-clear');
+    const paymentCard = document.getElementById('payment-card');
+    const inpPay      = document.getElementById('inp-pay');
+    const payError    = document.getElementById('pay-error');
+    const changeBox   = document.getElementById('change-box');
 
     // ── HELPERS ──────────────────────────────────────────────────────────────────
     function fmt(n) {
@@ -499,6 +559,7 @@
             totals.style.display   = 'none';
             btnPrint.style.display = 'none';
             btnClear.style.display = 'none';
+            paymentCard.style.display = 'none';
             return;
         }
 
@@ -533,6 +594,7 @@
         totals.style.display   = 'flex';
         btnPrint.style.display = 'inline-flex';
         btnClear.style.display = 'inline-flex';
+        paymentCard.style.display = 'block';
     }
 
     // ── RESET FORM ────────────────────────────────────────────────────────────
@@ -550,12 +612,53 @@
             billItems = [];
             renderBill();
             resetForm();
+            inpPay.value = '';
+            clearPayError();
+            changeBox.style.display = 'none';
             inpCode.focus();
         }
     });
 
     // ── PRINT ─────────────────────────────────────────────────────────────────
     btnPrint.addEventListener('click', () => window.print());
+
+    // ── PAYMENT / CHANGE ─────────────────────────────────────────────────────
+    function showPayError(msg) {
+        payError.textContent = msg;
+        payError.style.display = 'block';
+    }
+    function clearPayError() {
+        payError.style.display = 'none';
+    }
+
+    function calcChange() {
+        clearPayError();
+        const paid  = parseFloat(inpPay.value);
+        const total = parseFloat(totTotal.textContent.replace('$', ''));
+
+        if (isNaN(paid) || paid < 0) {
+            showPayError('Ingresa un monto válido.');
+            inpPay.focus();
+            return;
+        }
+
+        const change = paid - total;
+        changeBox.style.display = 'flex';
+
+        if (change < 0) {
+            changeBox.className = 'change-box insufficient';
+            changeBox.innerHTML = `⚠️ Monto insuficiente — faltan <strong>${fmt(Math.abs(change))}</strong>`;
+        } else if (change === 0) {
+            changeBox.className = 'change-box exact';
+            changeBox.innerHTML = `✅ Pago exacto — no hay cambio.`;
+        } else {
+            changeBox.className = 'change-box success';
+            changeBox.innerHTML = `✅ Cambio a devolver: <strong>${fmt(change)}</strong>`;
+        }
+    }
+
+    document.getElementById('btn-pay').addEventListener('click', calcChange);
+    inpPay.addEventListener('keydown', e => { if (e.key === 'Enter') calcChange(); });
 
     // ── FOOTER YEAR ──────────────────────────────────────────────────────────
     document.getElementById('yr').textContent = new Date().getFullYear();
