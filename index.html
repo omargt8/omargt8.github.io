@@ -20,6 +20,9 @@
             --green-soft: #e8f5e9;
             --yellow:     #fbc02d;
             --yellow-soft:#fff8e1;
+            --pink:       #e91e63;
+            --whatsapp:   #25d366;
+            --whatsapp-dk:#128c7e;
             --white:      #ffffff;
             --bg-alt:     #f7f9f7;
             --dark:       #17221a;
@@ -73,12 +76,10 @@
             text-decoration: none;
             letter-spacing: -.3px;
         }
-        .logo .logo-mark {
-            width: 38px; height: 38px;
-            display: grid; place-items: center;
-            background: var(--yellow);
-            border-radius: 12px;
-            font-size: 1.2rem;
+        .logo img { height: 50px; width: auto; }
+        .sr-only {
+            position: absolute; width: 1px; height: 1px;
+            overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
         }
         .nav-links {
             list-style: none;
@@ -98,11 +99,16 @@
         }
         .nav-links a:hover { background: var(--green-soft); color: var(--green-dark); }
         .nav-links .nav-cta {
-            background: var(--green);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: .4rem;
+            background: var(--whatsapp);
             color: var(--white);
             margin-left: .4rem;
         }
-        .nav-links .nav-cta:hover { background: var(--green-dark); color: var(--white); }
+        .nav-links .nav-cta:hover { background: var(--whatsapp-dk); color: var(--white); }
+        .wa-icon { width: 1.15em; height: 1.15em; flex-shrink: 0; }
 
         .menu-toggle {
             display: none;
@@ -198,21 +204,32 @@
         .btn-yellow:hover { box-shadow: 0 12px 28px rgba(251, 192, 45, .45); }
         .btn-ghost { background: rgba(255, 255, 255, .12); color: var(--white); border: 1px solid rgba(255, 255, 255, .35); }
         .btn-ghost:hover { background: rgba(255, 255, 255, .2); }
+        .btn-whatsapp { background: var(--whatsapp); color: var(--white); box-shadow: 0 8px 22px rgba(37, 211, 102, .35); }
+        .btn-whatsapp:hover { background: var(--whatsapp-dk); }
 
-        .hero-art {
-            position: relative;
+        .hero-art { position: relative; }
+        .hero-logo {
+            background: var(--white);
+            border-radius: 28px;
+            padding: 1.6rem 1.4rem;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, .25);
+            transform: rotate(-2deg);
+            margin-bottom: 1.2rem;
+        }
+        .hero-logo img { width: 100%; height: auto; }
+        .tiles {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
+            grid-template-columns: repeat(6, 1fr);
+            gap: .7rem;
         }
         .hero-art .tile {
             aspect-ratio: 1;
             display: grid;
             place-items: center;
-            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-size: clamp(1.3rem, 2.4vw, 1.7rem);
             background: rgba(255, 255, 255, .12);
             border: 1px solid rgba(255, 255, 255, .2);
-            border-radius: 22px;
+            border-radius: 14px;
             backdrop-filter: blur(4px);
             animation: float 6s ease-in-out infinite;
         }
@@ -237,7 +254,7 @@
             .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
             .hero p.lead { margin-left: auto; margin-right: auto; }
             .hero-actions { justify-content: center; }
-            .hero-art { max-width: 340px; margin: 0 auto; }
+            .hero-art { max-width: 400px; margin: 0 auto; }
         }
 
         /* ── HIGHLIGHTS STRIP ── */
@@ -271,6 +288,7 @@
         }
         .highlight strong { display: block; color: var(--dark); font-size: .98rem; }
         .highlight span { color: var(--muted); font-size: .85rem; }
+        .highlight a { color: var(--whatsapp-dk); font-weight: 600; text-decoration: none; }
 
         @media (max-width: 760px) {
             .highlights-inner { grid-template-columns: 1fr; }
@@ -403,7 +421,8 @@
         }
         .info-row strong { display: block; font-size: .95rem; }
         .info-row span { font-size: .9rem; opacity: .85; }
-        .location-info .btn { align-self: flex-start; margin-top: .8rem; }
+        .info-row a { color: var(--white); font-weight: 600; }
+        .location-actions { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: .8rem; }
         .map-embed { min-height: 360px; line-height: 0; }
         .map-embed iframe { width: 100%; height: 100%; min-height: 360px; border: none; }
 
@@ -424,8 +443,9 @@
         }
         .cta-box h2 { font-size: clamp(1.5rem, 3.5vw, 2.1rem); font-weight: 800; color: var(--dark); margin-bottom: .5rem; }
         .cta-box p { color: var(--muted); margin-bottom: 1.6rem; }
-        .cta-box .btn { background: var(--green); color: var(--white); }
-        .cta-box .btn:hover { background: var(--green-dark); box-shadow: 0 10px 24px rgba(46, 125, 50, .3); }
+        .cta-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: .8rem; }
+        .cta-box .btn-green { background: var(--green); color: var(--white); }
+        .cta-box .btn-green:hover { background: var(--green-dark); box-shadow: 0 10px 24px rgba(46, 125, 50, .3); }
 
         /* ── FOOTER ── */
         footer {
@@ -443,7 +463,31 @@
             padding-bottom: 1.8rem;
             border-bottom: 1px solid rgba(255, 255, 255, .08);
         }
-        footer .logo { color: var(--white); }
+        footer .logo {
+            background: var(--white);
+            border-radius: 16px;
+            padding: .4rem .9rem;
+        }
+        footer .logo img { height: 56px; }
+        .footer-contact { margin-top: .4rem; }
+        .footer-contact a { color: var(--whatsapp); text-decoration: none; font-weight: 600; }
+        .footer-contact a:hover { text-decoration: underline; }
+
+        /* ── WHATSAPP FLOTANTE ── */
+        .wa-float {
+            position: fixed;
+            right: 1.25rem; bottom: 1.25rem;
+            z-index: 200;
+            width: 60px; height: 60px;
+            display: grid; place-items: center;
+            border-radius: 50%;
+            background: var(--whatsapp);
+            color: var(--white);
+            box-shadow: 0 10px 26px rgba(0, 0, 0, .25);
+            transition: transform .2s, background .2s;
+        }
+        .wa-float:hover { transform: scale(1.08); background: var(--whatsapp-dk); }
+        .wa-float .wa-icon { width: 32px; height: 32px; }
         .footer-links { list-style: none; display: flex; flex-wrap: wrap; gap: 1.5rem; }
         .footer-links a { color: #aab5ad; text-decoration: none; transition: color .2s; }
         .footer-links a:hover { color: var(--yellow); }
@@ -465,12 +509,13 @@
     <!-- NAV -->
     <nav id="nav">
         <div class="container nav-inner">
-            <a href="#" class="logo"><span class="logo-mark">🛒</span> Tienda Evelyn</a>
+            <a href="#" class="logo"><img src="img/logo-tienda-evelyn-sm.png" alt="Tienda Evelyn" width="300" height="167"></a>
             <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navLinks">☰</button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#categorias">Productos</a></li>
                 <li><a href="#nosotros">Nosotros</a></li>
-                <li><a href="#ubicacion" class="nav-cta">📍 Visítanos</a></li>
+                <li><a href="#ubicacion">Ubicación</a></li>
+                <li><a href="https://wa.me/50378587115?text=Hola%20Tienda%20Evelyn%2C%20quisiera%20hacer%20una%20consulta" class="nav-cta" target="_blank" rel="noopener noreferrer"><svg class="wa-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.69.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35zM12.05 21.5h-.01a9.4 9.4 0 0 1-4.8-1.31l-.34-.2-3.57.94.95-3.48-.22-.36a9.42 9.42 0 0 1-1.44-5.03c0-5.2 4.24-9.44 9.45-9.44 2.52 0 4.89.98 6.67 2.77a9.38 9.38 0 0 1 2.76 6.68c0 5.2-4.24 9.43-9.45 9.43zm8.03-17.47A11.27 11.27 0 0 0 12.05.72C5.8.72.7 5.8.7 12.07c0 2 .52 3.95 1.52 5.67L.6 23.6l6-1.57a11.32 11.32 0 0 0 5.43 1.38h.01c6.25 0 11.34-5.09 11.35-11.35 0-3.03-1.18-5.88-3.31-8.03z"/></svg> WhatsApp</a></li>
             </ul>
         </div>
     </nav>
@@ -480,20 +525,23 @@
         <div class="container hero-grid">
             <div>
                 <span class="badge">📍 La Cabaña, El Paisnal</span>
-                <h1>Todo lo que necesitas, <span>cerca de casa.</span></h1>
+                <h1><span class="sr-only">Tienda Evelyn: </span>Todo lo que necesitas, <span>cerca de casa.</span></h1>
                 <p class="lead">En Tienda Evelyn encuentras abarrotes, bebidas, productos de limpieza y mucho más, con la atención amable de siempre.</p>
                 <div class="hero-actions">
                     <a href="#categorias" class="btn btn-yellow">Ver productos →</a>
-                    <a href="#ubicacion" class="btn btn-ghost">¿Cómo llegar?</a>
+                    <a href="https://wa.me/50378587115?text=Hola%20Tienda%20Evelyn%2C%20quisiera%20hacer%20una%20consulta" class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer"><svg class="wa-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.69.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35zM12.05 21.5h-.01a9.4 9.4 0 0 1-4.8-1.31l-.34-.2-3.57.94.95-3.48-.22-.36a9.42 9.42 0 0 1-1.44-5.03c0-5.2 4.24-9.44 9.45-9.44 2.52 0 4.89.98 6.67 2.77a9.38 9.38 0 0 1 2.76 6.68c0 5.2-4.24 9.43-9.45 9.43zm8.03-17.47A11.27 11.27 0 0 0 12.05.72C5.8.72.7 5.8.7 12.07c0 2 .52 3.95 1.52 5.67L.6 23.6l6-1.57a11.32 11.32 0 0 0 5.43 1.38h.01c6.25 0 11.34-5.09 11.35-11.35 0-3.03-1.18-5.88-3.31-8.03z"/></svg> Escríbenos</a>
                 </div>
             </div>
-            <div class="hero-art" aria-hidden="true">
-                <div class="tile">🥫</div>
-                <div class="tile accent">🥤</div>
-                <div class="tile">🍞</div>
-                <div class="tile">🧴</div>
-                <div class="tile">🌽</div>
-                <div class="tile accent">🍬</div>
+            <div class="hero-art">
+                <div class="hero-logo"><img src="img/logo-tienda-evelyn.png" alt="Logo de Tienda Evelyn" width="600" height="334"></div>
+                <div class="tiles" aria-hidden="true">
+                    <div class="tile">🥫</div>
+                    <div class="tile accent">🥤</div>
+                    <div class="tile">🍞</div>
+                    <div class="tile">🧴</div>
+                    <div class="tile">🌽</div>
+                    <div class="tile accent">🍬</div>
+                </div>
             </div>
         </div>
         <svg class="hero-wave" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true">
@@ -514,8 +562,8 @@
                     <div><strong>Precios accesibles</strong><span>Lo mejor para tu familia</span></div>
                 </div>
                 <div class="highlight">
-                    <div class="h-icon">🤝</div>
-                    <div><strong>De la comunidad</strong><span>Tu tienda de confianza</span></div>
+                    <div class="h-icon">💬</div>
+                    <div><strong>Escríbenos por WhatsApp</strong><span><a href="https://wa.me/50378587115?text=Hola%20Tienda%20Evelyn%2C%20quisiera%20hacer%20una%20consulta" target="_blank" rel="noopener noreferrer">+503 7858-7115</a></span></div>
                 </div>
             </div>
         </div>
@@ -594,9 +642,14 @@
                         <div class="i">🕒</div>
                         <div><strong>Horario</strong><span>Abrimos todos los días para atenderte.</span></div>
                     </div>
-                    <a href="https://maps.app.goo.gl/HLEF1AvR7WM4EAkLA" target="_blank" rel="noopener noreferrer" class="btn btn-yellow">
-                        🗺️ Abrir en Google Maps
-                    </a>
+                    <div class="info-row">
+                        <div class="i">💬</div>
+                        <div><strong>WhatsApp</strong><span><a href="https://wa.me/50378587115?text=Hola%20Tienda%20Evelyn%2C%20quisiera%20hacer%20una%20consulta" target="_blank" rel="noopener noreferrer">+503 7858-7115</a></span></div>
+                    </div>
+                    <div class="location-actions">
+                        <a href="https://maps.app.goo.gl/HLEF1AvR7WM4EAkLA" target="_blank" rel="noopener noreferrer" class="btn btn-yellow">🗺️ Google Maps</a>
+                        <a href="https://wa.me/50378587115?text=Hola%20Tienda%20Evelyn%2C%20quisiera%20hacer%20una%20consulta" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp"><svg class="wa-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.69.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35zM12.05 21.5h-.01a9.4 9.4 0 0 1-4.8-1.31l-.34-.2-3.57.94.95-3.48-.22-.36a9.42 9.42 0 0 1-1.44-5.03c0-5.2 4.24-9.44 9.45-9.44 2.52 0 4.89.98 6.67 2.77a9.38 9.38 0 0 1 2.76 6.68c0 5.2-4.24 9.43-9.45 9.43zm8.03-17.47A11.27 11.27 0 0 0 12.05.72C5.8.72.7 5.8.7 12.07c0 2 .52 3.95 1.52 5.67L.6 23.6l6-1.57a11.32 11.32 0 0 0 5.43 1.38h.01c6.25 0 11.34-5.09 11.35-11.35 0-3.03-1.18-5.88-3.31-8.03z"/></svg> WhatsApp</a>
+                    </div>
                 </div>
                 <div class="map-embed">
                     <iframe
@@ -616,8 +669,11 @@
         <div class="container">
             <div class="cta-box reveal">
                 <h2>¡Te esperamos en Tienda Evelyn! 🛒</h2>
-                <p>Pasa a visitarnos y encuentra todo lo que necesitas en un solo lugar.</p>
-                <a href="https://maps.app.goo.gl/HLEF1AvR7WM4EAkLA" target="_blank" rel="noopener noreferrer" class="btn">Cómo llegar →</a>
+                <p>Pasa a visitarnos o escríbenos por WhatsApp para consultar lo que necesites.</p>
+                <div class="cta-actions">
+                    <a href="https://wa.me/50378587115?text=Hola%20Tienda%20Evelyn%2C%20quisiera%20hacer%20una%20consulta" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp"><svg class="wa-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.69.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35zM12.05 21.5h-.01a9.4 9.4 0 0 1-4.8-1.31l-.34-.2-3.57.94.95-3.48-.22-.36a9.42 9.42 0 0 1-1.44-5.03c0-5.2 4.24-9.44 9.45-9.44 2.52 0 4.89.98 6.67 2.77a9.38 9.38 0 0 1 2.76 6.68c0 5.2-4.24 9.43-9.45 9.43zm8.03-17.47A11.27 11.27 0 0 0 12.05.72C5.8.72.7 5.8.7 12.07c0 2 .52 3.95 1.52 5.67L.6 23.6l6-1.57a11.32 11.32 0 0 0 5.43 1.38h.01c6.25 0 11.34-5.09 11.35-11.35 0-3.03-1.18-5.88-3.31-8.03z"/></svg> +503 7858-7115</a>
+                    <a href="https://maps.app.goo.gl/HLEF1AvR7WM4EAkLA" target="_blank" rel="noopener noreferrer" class="btn btn-green">Cómo llegar →</a>
+                </div>
             </div>
         </div>
     </div>
@@ -626,7 +682,7 @@
     <footer>
         <div class="container">
             <div class="footer-top">
-                <a href="#" class="logo"><span class="logo-mark">🛒</span> Tienda Evelyn</a>
+                <a href="#" class="logo"><img src="img/logo-tienda-evelyn-sm.png" alt="Tienda Evelyn" width="300" height="167"></a>
                 <ul class="footer-links">
                     <li><a href="#categorias">Productos</a></li>
                     <li><a href="#nosotros">Nosotros</a></li>
@@ -635,9 +691,13 @@
             </div>
             <div class="footer-bottom">
                 <p>&copy; <span id="yr"></span> Tienda Evelyn &mdash; La Cabaña, El Paisnal, El Salvador. Todos los derechos reservados.</p>
+                <p class="footer-contact">WhatsApp: <a href="https://wa.me/50378587115?text=Hola%20Tienda%20Evelyn%2C%20quisiera%20hacer%20una%20consulta" target="_blank" rel="noopener noreferrer">+503 7858-7115</a></p>
             </div>
         </div>
     </footer>
+
+    <!-- WHATSAPP FLOTANTE -->
+    <a href="https://wa.me/50378587115?text=Hola%20Tienda%20Evelyn%2C%20quisiera%20hacer%20una%20consulta" class="wa-float" target="_blank" rel="noopener noreferrer" aria-label="Escríbenos por WhatsApp al +503 7858-7115"><svg class="wa-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.69.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35zM12.05 21.5h-.01a9.4 9.4 0 0 1-4.8-1.31l-.34-.2-3.57.94.95-3.48-.22-.36a9.42 9.42 0 0 1-1.44-5.03c0-5.2 4.24-9.44 9.45-9.44 2.52 0 4.89.98 6.67 2.77a9.38 9.38 0 0 1 2.76 6.68c0 5.2-4.24 9.43-9.45 9.43zm8.03-17.47A11.27 11.27 0 0 0 12.05.72C5.8.72.7 5.8.7 12.07c0 2 .52 3.95 1.52 5.67L.6 23.6l6-1.57a11.32 11.32 0 0 0 5.43 1.38h.01c6.25 0 11.34-5.09 11.35-11.35 0-3.03-1.18-5.88-3.31-8.03z"/></svg></a>
 
     <script>
         document.getElementById('yr').textContent = new Date().getFullYear();
